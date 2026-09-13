@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Content | Back-office{% endblock %}
+{% block title %}Contenu | Administration{% endblock %}
 
 {% block body %}
-    <h1>Content</h1>
+    <h1>Contenu</h1>
 
     <div class="card mb-4">
         <div class="card-body">
-            <h2 class="h6">Add a theme</h2>
+            <h2 class="h6">Ajouter un thème</h2>
             <form method="post" action="{{ path('app_admin_theme_add') }}" class="d-flex gap-2">
-                <input type="text" name="name" class="form-control" placeholder="Theme name" required>
+                <input type="text" name="name" class="form-control" placeholder="Nom du thème" required>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_theme_add') }}">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
             </form>
         </div>
     </div>
@@ -23,11 +23,11 @@
 
                 <form method="post" action="{{ path('app_admin_cursus_add') }}" class="row g-2 mb-3">
                     <input type="hidden" name="themeId" value="{{ theme.id }}">
-                    <div class="col-4"><input type="text" name="name" class="form-control" placeholder="Cursus name" required></div>
-                    <div class="col-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required></div>
+                    <div class="col-4"><input type="text" name="name" class="form-control" placeholder="Nom du cursus" required></div>
+                    <div class="col-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Prix" required></div>
                     <div class="col-2">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_cursus_add') }}">
-                        <button type="submit" class="btn btn-outline-primary">Add cursus</button>
+                        <button type="submit" class="btn btn-outline-primary">Ajouter le cursus</button>
                     </div>
                 </form>
 
@@ -43,24 +43,24 @@
                                     <input type="text" name="videoUrl" value="{{ lesson.videoUrl }}" class="form-control form-control-sm" style="max-width: 200px;">
                                     <input type="text" name="content" value="{{ lesson.content }}" class="form-control form-control-sm" style="max-width: 200px;">
                                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_lesson_edit') }}">
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Enregistrer</button>
                                 </form>
                                 <form method="post" action="{{ path('app_admin_lesson_delete', {id: lesson.id}) }}">
                                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_lesson_delete') }}">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
                                 </form>
                             </div>
                         {% endfor %}
 
                         <form method="post" action="{{ path('app_admin_lesson_add') }}" class="row g-2">
                             <input type="hidden" name="cursusId" value="{{ cursus.id }}">
-                            <div class="col-3"><input type="text" name="title" class="form-control" placeholder="Lesson title" required></div>
-                            <div class="col-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required></div>
-                            <div class="col-3"><input type="text" name="videoUrl" class="form-control" placeholder="Video URL" required></div>
-                            <div class="col-2"><input type="text" name="content" class="form-control" placeholder="Content" required></div>
+                            <div class="col-3"><input type="text" name="title" class="form-control" placeholder="Titre de la leçon" required></div>
+                            <div class="col-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Prix" required></div>
+                            <div class="col-3"><input type="text" name="videoUrl" class="form-control" placeholder="URL de la vidéo" required></div>
+                            <div class="col-2"><input type="text" name="content" class="form-control" placeholder="Contenu" required></div>
                             <div class="col-2">
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_lesson_add') }}">
-                                <button type="submit" class="btn btn-outline-success">Add lesson</button>
+                                <button type="submit" class="btn btn-outline-success">Ajouter la leçon</button>
                             </div>
                         </form>
                     </div>

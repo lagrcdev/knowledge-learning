@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users | Back-office{% endblock %}
+{% block title %}Utilisateurs | Administration{% endblock %}
 
 {% block body %}
-    <h1>User accounts</h1>
+    <h1>Comptes utilisateurs</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Email</th>
-                <th>Verified</th>
-                <th>Roles</th>
+                <th>Activé</th>
+                <th>Rôles</th>
                 <th></th>
             </tr>
         </thead>
@@ -20,16 +20,16 @@
                 <tr>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
                     <td>{{ user.roles|join(', ') }}</td>
                     <td class="d-flex gap-2">
                         <form method="post" action="{{ path('app_admin_user_toggle', {id: user.id}) }}">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_toggle') }}">
-                            <button type="submit" class="btn btn-sm btn-outline-primary">Toggle admin</button>
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Basculer admin</button>
                         </form>
                         <form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_delete') }}">
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
                         </form>
                     </td>
                 </tr>

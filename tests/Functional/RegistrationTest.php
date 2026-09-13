@@ -35,7 +35,7 @@ class RegistrationTest extends WebTestCase
     public function testUserCanRegisterAndReceivesAConfirmationEmail(): void
     {
         $this->client->request('GET', '/register');
-        $this->client->submitForm('Register', [
+        $this->client->submitForm('S\'inscrire', [
             'registration_form[name]' => 'Functional Test',
             'registration_form[email]' => 'functional-test@example.com',
             'registration_form[plainPassword]' => 'password123',
@@ -57,7 +57,7 @@ class RegistrationTest extends WebTestCase
     public function testClickingTheConfirmationLinkVerifiesTheAccount(): void
     {
         $this->client->request('GET', '/register');
-        $this->client->submitForm('Register', [
+        $this->client->submitForm('S\'inscrire', [
             'registration_form[name]' => 'Functional Test',
             'registration_form[email]' => 'functional-test@example.com',
             'registration_form[plainPassword]' => 'password123',

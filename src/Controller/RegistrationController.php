@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@knowledge-learning.com', 'Knowledge Learning'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Merci de confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
@@ -75,7 +75,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $this->addFlash('success', 'Your email address has been verified. You can now buy cursus and lessons.');
+        $this->addFlash('success', 'Votre adresse email a été vérifiée. Vous pouvez maintenant acheter des cursus et des leçons.');
 
         return $this->redirectToRoute('app_home');
     }

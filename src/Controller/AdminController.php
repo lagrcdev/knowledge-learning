@@ -114,7 +114,7 @@ class AdminController extends AbstractController
         $theme = $themeRepository->find((int) $request->request->get('themeId'));
 
         if (!$theme) {
-            throw $this->createNotFoundException('Theme not found.');
+            throw $this->createNotFoundException('Thème introuvable.');
         }
 
         $cursus = new Cursus();
@@ -139,7 +139,7 @@ class AdminController extends AbstractController
         $cursus = $cursusRepository->find((int) $request->request->get('cursusId'));
 
         if (!$cursus) {
-            throw $this->createNotFoundException('Cursus not found.');
+            throw $this->createNotFoundException('Cursus introuvable.');
         }
 
         $lesson = new Lesson();
@@ -192,7 +192,7 @@ class AdminController extends AbstractController
         $token = $request->request->get('_csrf_token');
 
         if (!$csrfTokenManager->isTokenValid(new CsrfToken($tokenId, $token))) {
-            throw $this->createAccessDeniedException('Invalid CSRF token.');
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
     }
 }

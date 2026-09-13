@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>{{ lesson.title }}</h1>
-    <p>Cursus: <a href="{{ path('app_cursus_show', {id: lesson.cursus.id}) }}">{{ lesson.cursus.name }}</a></p>
+    <p>Cursus : <a href="{{ path('app_cursus_show', {id: lesson.cursus.id}) }}">{{ lesson.cursus.name }}</a></p>
 
     {% if hasAccess %}
         <div class="ratio ratio-16x9 mb-3" style="max-width: 480px;">
@@ -16,20 +16,20 @@
         <p>{{ lesson.content }}</p>
 
         {% if isValidated %}
-            <div class="alert alert-success">You have validated this lesson.</div>
+            <div class="alert alert-success">Vous avez validé cette leçon.</div>
         {% else %}
             <form method="post" action="{{ path('app_lesson_validate', {id: lesson.id}) }}">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('validate_lesson') }}">
-                <button type="submit" class="btn btn-success">Validate this lesson</button>
+                <button type="submit" class="btn btn-success">Valider cette leçon</button>
             </form>
         {% endif %}
     {% elseif app.user %}
-        <p>Price for this lesson only: {{ lesson.price }} €</p>
+        <p>Prix de cette leçon seule : {{ lesson.price }} €</p>
         <form method="post" action="{{ path('app_purchase_lesson', {id: lesson.id}) }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('purchase_lesson') }}">
-            <button type="submit" class="btn btn-primary">Buy this lesson ({{ lesson.price }} €)</button>
+            <button type="submit" class="btn btn-primary">Acheter cette leçon ({{ lesson.price }} €)</button>
         </form>
     {% else %}
-        <p><a href="{{ path('app_login') }}">Login</a> to buy this lesson.</p>
+        <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour acheter cette leçon.</p>
     {% endif %}
 {% endblock %}

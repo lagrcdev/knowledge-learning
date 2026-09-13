@@ -4,21 +4,21 @@
 
 {% block body %}
     <h1>{{ cursus.name }}</h1>
-    <p>Theme: {{ cursus.theme.name }}</p>
-    <p>Price for the whole cursus: {{ cursus.price }} €</p>
+    <p>Thème : {{ cursus.theme.name }}</p>
+    <p>Prix du cursus complet : {{ cursus.price }} €</p>
 
     {% if hasAccess %}
-        <div class="alert alert-success">You have access to this whole cursus.</div>
+        <div class="alert alert-success">Vous avez accès à ce cursus complet.</div>
     {% elseif app.user %}
         <form method="post" action="{{ path('app_purchase_cursus', {id: cursus.id}) }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('purchase_cursus') }}">
-            <button type="submit" class="btn btn-primary">Buy the whole cursus ({{ cursus.price }} €)</button>
+            <button type="submit" class="btn btn-primary">Acheter le cursus complet ({{ cursus.price }} €)</button>
         </form>
     {% else %}
-        <p><a href="{{ path('app_login') }}">Login</a> to buy this cursus.</p>
+        <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour acheter ce cursus.</p>
     {% endif %}
 
-    <h2 class="h5 mt-4">Lessons</h2>
+    <h2 class="h5 mt-4">Leçons</h2>
     <ul class="list-unstyled">
         {% for lesson in cursus.lessons %}
             <li class="mb-2">

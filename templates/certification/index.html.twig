@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My certifications | Knowledge Learning{% endblock %}
+{% block title %}Mes certifications | Knowledge Learning{% endblock %}
 
 {% block body %}
-    <h1>My certifications</h1>
+    <h1>Mes certifications</h1>
 
     {% if certifications|length == 0 %}
-        <p>You have not obtained any certification yet.</p>
+        <p>Vous n'avez obtenu aucune certification pour l'instant.</p>
     {% else %}
         <ul>
             {% for certification in certifications %}
-                <li>{{ certification.cursus.name }} - validated on {{ certification.validatedAt|date('Y-m-d') }}</li>
+                <li>{{ certification.cursus.name }} - validée le {{ certification.validatedAt|date('d/m/Y') }}</li>
             {% endfor %}
         </ul>
     {% endif %}

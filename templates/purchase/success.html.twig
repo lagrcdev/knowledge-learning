@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thank you | Knowledge Learning{% endblock %}
+
+{% block body %}
+    <h1>Thank you for your purchase!</h1>
+    <p>You now have access to: <strong>{{ label }}</strong></p>
+    <a href="{{ path('app_themes') }}" class="btn btn-primary">Browse more themes</a>
+{% endblock %}

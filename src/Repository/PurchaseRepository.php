@@ -2,12 +2,17 @@
 
 namespace App\Repository;
 
+use App\Entity\Cursus;
+use App\Entity\Lesson;
 use App\Entity\Purchase;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Purchase>
+ *
+ * This is the data-access component (DAO/Repository pattern) for purchases.
  */
 class PurchaseRepository extends ServiceEntityRepository
 {
@@ -16,28 +21,39 @@ class PurchaseRepository extends ServiceEntityRepository
         parent::__construct($registry, Purchase::class);
     }
 
-//    /**
-//     * @return Purchase[] Returns an array of Purchase objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * A user has access to a cursus if they bought that cursus directly.
+     */
+    public function hasAccessToCursus(User $user, Cursus $cursus): bool
+    {
+        $count = $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.user = :user')
+            ->andWhere('p.cursus = :cursus')
+            ->setParameter('user', $user)
+            ->setParameter('cursus', $cursus)
+            ->getQuery()
+            ->getSingleScalarResult();
 
-//    public function findOneBySomeField($value): ?Purchase
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $count > 0;
+    }
+
+    /**
+     * A user has access to a lesson if they bought that lesson directly,
+     * OR if they bought its parent cursus as a whole.
+     */
+    public function hasAccessToLesson(User $user, Lesson $lesson): bool
+    {
+        $count = $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.user = :user')
+            ->andWhere('p.lesson = :lesson OR p.cursus = :cursus')
+            ->setParameter('user', $user)
+            ->setParameter('lesson', $lesson)
+            ->setParameter('cursus', $lesson->getCursus())
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $count > 0;
+    }
 }

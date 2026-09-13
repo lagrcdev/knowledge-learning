@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ lesson.title }} | Knowledge Learning{% endblock %}
+
+{% block body %}
+    <h1>{{ lesson.title }}</h1>
+    <p>Cursus: <a href="{{ path('app_cursus_show', {id: lesson.cursus.id}) }}">{{ lesson.cursus.name }}</a></p>
+
+    {% if hasAccess %}
+        <div class="ratio ratio-16x9 mb-3" style="max-width: 480px;">
+            <video controls>
+                <source src="{{ lesson.videoUrl }}" type="video/mp4">
+            </video>
+        </div>
+
+        <p>{{ lesson.content }}</p>
+
+        {% if isValidated %}
+            <div class="alert alert-success">You have validated this lesson.</div>
+        {% else %}
+            <form method="post" action="{{ path('app_lesson_validate', {id: lesson.id}) }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('validate_lesson') }}">
+                <button type="submit" class="btn btn-success">Validate this lesson</button>
+            </form>
+        {% endif %}
+    {% elseif app.user %}
+        <p>Price for this lesson only: {{ lesson.price }} €</p>
+        <form method="post" action="{{ path('app_purchase_lesson', {id: lesson.id}) }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('purchase_lesson') }}">
+            <button type="submit" class="btn btn-primary">Buy this lesson ({{ lesson.price }} €)</button>
+        </form>
+    {% else %}
+        <p><a href="{{ path('app_login') }}">Login</a> to buy this lesson.</p>
+    {% endif %}
+{% endblock %}

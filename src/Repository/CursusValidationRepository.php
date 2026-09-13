@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Cursus;
 use App\Entity\CursusValidation;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +18,29 @@ class CursusValidationRepository extends ServiceEntityRepository
         parent::__construct($registry, CursusValidation::class);
     }
 
-//    /**
-//     * @return CursusValidation[] Returns an array of CursusValidation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function isCursusValidatedByUser(User $user, Cursus $cursus): bool
+    {
+        $count = $this->createQueryBuilder('cv')
+            ->select('COUNT(cv.id)')
+            ->andWhere('cv.user = :user')
+            ->andWhere('cv.cursus = :cursus')
+            ->setParameter('user', $user)
+            ->setParameter('cursus', $cursus)
+            ->getQuery()
+            ->getSingleScalarResult();
 
-//    public function findOneBySomeField($value): ?CursusValidation
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $count > 0;
+    }
+
+    /**
+     * @return CursusValidation[]
+     */
+    public function findByUser(User $user): array
+    {
+        return $this->createQueryBuilder('cv')
+            ->andWhere('cv.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

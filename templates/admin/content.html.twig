@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Content | Back-office{% endblock %}
+
+{% block body %}
+    <h1>Content</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="h6">Add a theme</h2>
+            <form method="post" action="{{ path('app_admin_theme_add') }}" class="d-flex gap-2">
+                <input type="text" name="name" class="form-control" placeholder="Theme name" required>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_theme_add') }}">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+    {% for theme in themes %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="h5">{{ theme.name }}</h2>
+
+                <form method="post" action="{{ path('app_admin_cursus_add') }}" class="row g-2 mb-3">
+                    <input type="hidden" name="themeId" value="{{ theme.id }}">
+                    <div class="col-4"><input type="text" name="name" class="form-control" placeholder="Cursus name" required></div>
+                    <div class="col-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required></div>
+                    <div class="col-2">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_cursus_add') }}">
+                        <button type="submit" class="btn btn-outline-primary">Add cursus</button>
+                    </div>
+                </form>
+
+                {% for cursus in theme.cursusList %}
+                    <div class="border rounded p-3 mb-3">
+                        <h3 class="h6">{{ cursus.name }} - {{ cursus.price }} €</h3>
+
+                        {% for lesson in cursus.lessons %}
+                            <div class="d-flex gap-2 align-items-center mb-2 flex-wrap">
+                                <form method="post" action="{{ path('app_admin_lesson_edit', {id: lesson.id}) }}" class="d-flex gap-2 flex-wrap flex-grow-1">
+                                    <input type="text" name="title" value="{{ lesson.title }}" class="form-control form-control-sm" style="max-width: 200px;">
+                                    <input type="number" step="0.01" name="price" value="{{ lesson.price }}" class="form-control form-control-sm" style="max-width: 100px;">
+                                    <input type="text" name="videoUrl" value="{{ lesson.videoUrl }}" class="form-control form-control-sm" style="max-width: 200px;">
+                                    <input type="text" name="content" value="{{ lesson.content }}" class="form-control form-control-sm" style="max-width: 200px;">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_lesson_edit') }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                                </form>
+                                <form method="post" action="{{ path('app_admin_lesson_delete', {id: lesson.id}) }}">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_lesson_delete') }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+
+                        <form method="post" action="{{ path('app_admin_lesson_add') }}" class="row g-2">
+                            <input type="hidden" name="cursusId" value="{{ cursus.id }}">
+                            <div class="col-3"><input type="text" name="title" class="form-control" placeholder="Lesson title" required></div>
+                            <div class="col-2"><input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required></div>
+                            <div class="col-3"><input type="text" name="videoUrl" class="form-control" placeholder="Video URL" required></div>
+                            <div class="col-2"><input type="text" name="content" class="form-control" placeholder="Content" required></div>
+                            <div class="col-2">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_lesson_add') }}">
+                                <button type="submit" class="btn btn-outline-success">Add lesson</button>
+                            </div>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

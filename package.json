@@ -1,0 +1,10 @@
+{
+  "name": "knowledge-learning-maildev",
+  "private": true,
+  "scripts": {
+    "mail": "maildev"
+  },
+  "devDependencies": {
+    "maildev": "^3.0.0-rc.3"
+  }
+}

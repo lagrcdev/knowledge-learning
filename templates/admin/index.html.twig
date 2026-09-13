@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-office | Knowledge Learning{% endblock %}
+
+{% block body %}
+    <h1>Back-office</h1>
+    <ul>
+        <li><a href="{{ path('app_admin_users') }}">Manage user accounts</a></li>
+        <li><a href="{{ path('app_admin_content') }}">Manage content (themes, cursus, lessons)</a></li>
+        <li><a href="{{ path('app_admin_purchases') }}">View purchases</a></li>
+    </ul>
+{% endblock %}

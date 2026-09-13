@@ -9,3 +9,11 @@ framework:
             - submit
             - authenticate
             - logout
+
+when@test:
+    framework:
+        # In tests, use classic (session-based) CSRF tokens instead of the
+        # stateless JS-based ones, so the test client (which does not run
+        # JavaScript) can submit forms normally.
+        csrf_protection:
+            stateless_token_ids: []

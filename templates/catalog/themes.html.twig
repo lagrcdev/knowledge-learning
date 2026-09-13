@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Themes | Knowledge Learning{% endblock %}
+
+{% block body %}
+    <h1>Themes</h1>
+
+    {% for theme in themes %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="h5">{{ theme.name }}</h2>
+                <ul class="list-unstyled">
+                    {% for cursus in theme.cursusList %}
+                        <li>
+                            <a href="{{ path('app_cursus_show', {id: cursus.id}) }}">{{ cursus.name }}</a>
+                            - {{ cursus.price }} €
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

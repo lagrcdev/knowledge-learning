@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Purchases | Back-office{% endblock %}
+
+{% block body %}
+    <h1>Purchases</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Type</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.user.email }}</td>
+                    <td>{{ purchase.type }}</td>
+                    <td>{{ purchase.cursus ? purchase.cursus.name : purchase.lesson.title }}</td>
+                    <td>{{ purchase.amount }} €</td>
+                    <td>{{ purchase.purchasedAt|date('Y-m-d H:i') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

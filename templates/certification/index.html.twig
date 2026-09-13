@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My certifications | Knowledge Learning{% endblock %}
+
+{% block body %}
+    <h1>My certifications</h1>
+
+    {% if certifications|length == 0 %}
+        <p>You have not obtained any certification yet.</p>
+    {% else %}
+        <ul>
+            {% for certification in certifications %}
+                <li>{{ certification.cursus.name }} - validated on {{ certification.validatedAt|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

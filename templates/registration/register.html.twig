@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register | Knowledge Learning{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        <div class="card p-4" style="max-width: 400px; width: 100%;">
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+
+            <h1 class="h5 mb-3">Register</h1>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.name) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword, { label: 'Password' }) }}
+
+                <button type="submit" class="btn btn-primary w-100 mt-2">Register</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users | Back-office{% endblock %}
+
+{% block body %}
+    <h1>User accounts</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Verified</th>
+                <th>Roles</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.roles|join(', ') }}</td>
+                    <td class="d-flex gap-2">
+                        <form method="post" action="{{ path('app_admin_user_toggle', {id: user.id}) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_toggle') }}">
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Toggle admin</button>
+                        </form>
+                        <form method="post" action="{{ path('app_admin_user_delete', {id: user.id}) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_user_delete') }}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -25,18 +25,18 @@ class LessonValidationController extends AbstractController
         CertificationService $certificationService,
     ): RedirectResponse {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('validate_lesson', $request->request->get('_csrf_token')))) {
-            throw $this->createAccessDeniedException('Invalid CSRF token.');
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
 
         $user = $this->getUser();
 
         if (!$purchaseRepository->hasAccessToLesson($user, $lesson)) {
-            throw $this->createAccessDeniedException('You need to buy this lesson first.');
+            throw $this->createAccessDeniedException('Vous devez d\'abord acheter cette leçon.');
         }
 
         $certificationService->validateLesson($user, $lesson);
 
-        $this->addFlash('success', 'Lesson validated.');
+        $this->addFlash('success', 'Leçon validée.');
 
         return $this->redirectToRoute('app_lesson_show', ['id' => $lesson->getId()]);
     }

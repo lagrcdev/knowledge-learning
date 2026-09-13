@@ -12,7 +12,7 @@ class LoginTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/login');
-        $client->submitForm('Login', [
+        $client->submitForm('Se connecter', [
             '_username' => 'client@example.com',
             '_password' => 'client1234',
         ]);
@@ -30,7 +30,7 @@ class LoginTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/login');
-        $client->submitForm('Login', [
+        $client->submitForm('Se connecter', [
             '_username' => 'client@example.com',
             '_password' => 'wrong-password',
         ]);

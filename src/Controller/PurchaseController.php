@@ -31,13 +31,13 @@ class PurchaseController extends AbstractController
         StripeService $stripeService,
     ): RedirectResponse {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('purchase_cursus', $request->request->get('_csrf_token')))) {
-            throw $this->createAccessDeniedException('Invalid CSRF token.');
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
 
         $user = $this->getUser();
 
         if (!$purchaseService->canPurchase($user)) {
-            $this->addFlash('danger', 'You must verify your email address before buying anything.');
+            $this->addFlash('danger', 'Vous devez vérifier votre adresse email avant de pouvoir acheter.');
 
             return $this->redirectToRoute('app_cursus_show', ['id' => $cursus->getId()]);
         }
@@ -59,13 +59,13 @@ class PurchaseController extends AbstractController
         StripeService $stripeService,
     ): RedirectResponse {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('purchase_lesson', $request->request->get('_csrf_token')))) {
-            throw $this->createAccessDeniedException('Invalid CSRF token.');
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
 
         $user = $this->getUser();
 
         if (!$purchaseService->canPurchase($user)) {
-            $this->addFlash('danger', 'You must verify your email address before buying anything.');
+            $this->addFlash('danger', 'Vous devez vérifier votre adresse email avant de pouvoir acheter.');
 
             return $this->redirectToRoute('app_lesson_show', ['id' => $lesson->getId()]);
         }
@@ -91,7 +91,7 @@ class PurchaseController extends AbstractController
         $id = (int) $request->query->get('id');
 
         if (!$sessionId || !$stripeService->isSessionPaid($sessionId)) {
-            $this->addFlash('danger', 'The payment could not be verified.');
+            $this->addFlash('danger', 'Le paiement n\'a pas pu être vérifié.');
 
             return $this->redirectToRoute('app_home');
         }
@@ -102,7 +102,7 @@ class PurchaseController extends AbstractController
             $cursus = $cursusRepository->find($id);
 
             if (!$cursus) {
-                throw $this->createNotFoundException('Cursus not found.');
+                throw $this->createNotFoundException('Cursus introuvable.');
             }
 
             $purchaseService->recordCursusPurchase($user, $cursus);
@@ -113,7 +113,7 @@ class PurchaseController extends AbstractController
         $lesson = $lessonRepository->find($id);
 
         if (!$lesson) {
-            throw $this->createNotFoundException('Lesson not found.');
+            throw $this->createNotFoundException('Leçon introuvable.');
         }
 
         $purchaseService->recordLessonPurchase($user, $lesson);

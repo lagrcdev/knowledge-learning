@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register | Knowledge Learning{% endblock %}
+{% block title %}Inscription | Knowledge Learning{% endblock %}
 
 {% block body %}
     <div class="d-flex justify-content-center">
@@ -9,16 +9,16 @@
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
             {% endfor %}
 
-            <h1 class="h5 mb-3">Register</h1>
+            <h1 class="h5 mb-3">Inscription</h1>
 
             {{ form_errors(registrationForm) }}
 
             {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.name) }}
-                {{ form_row(registrationForm.email) }}
-                {{ form_row(registrationForm.plainPassword, { label: 'Password' }) }}
+                {{ form_row(registrationForm.name, { label: 'Nom' }) }}
+                {{ form_row(registrationForm.email, { label: 'Email' }) }}
+                {{ form_row(registrationForm.plainPassword, { label: 'Mot de passe' }) }}
 
-                <button type="submit" class="btn btn-primary w-100 mt-2">Register</button>
+                <button type="submit" class="btn btn-primary w-100 mt-2">S'inscrire</button>
             {{ form_end(registrationForm) }}
         </div>
     </div>

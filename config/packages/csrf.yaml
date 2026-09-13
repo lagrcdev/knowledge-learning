@@ -1,19 +1,10 @@
-# Enable stateless CSRF protection for forms and logins/logouts
+# Classic (session-based) CSRF protection for forms and logins/logouts.
+# This project has no JavaScript build pipeline (minimal front-end), so the
+# newer stateless/JS-based CSRF tokens are not used here.
 framework:
     form:
         csrf_protection:
             token_id: submit
 
     csrf_protection:
-        stateless_token_ids:
-            - submit
-            - authenticate
-            - logout
-
-when@test:
-    framework:
-        # In tests, use classic (session-based) CSRF tokens instead of the
-        # stateless JS-based ones, so the test client (which does not run
-        # JavaScript) can submit forms normally.
-        csrf_protection:
-            stateless_token_ids: []
+        stateless_token_ids: []

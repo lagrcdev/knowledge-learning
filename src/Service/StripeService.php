@@ -37,7 +37,9 @@ class StripeService
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => $successUrl . '?session_id={CHECKOUT_SESSION_ID}',
+            // The success URL may already have query parameters (e.g. ?type=cursus&id=4),
+            // so the session_id must be appended with "&" in that case, not "?".
+            'success_url' => $successUrl . (str_contains($successUrl, '?') ? '&' : '?') . 'session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $cancelUrl,
         ]);
     }
